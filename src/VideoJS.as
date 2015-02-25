@@ -143,6 +143,10 @@ package{
                 _app.model.rtmpStream = loaderInfo.parameters.rtmpStream;
               }
             }
+
+            if(loaderInfo.parameters.subscribe != undefined && loaderInfo.parameters.subscribe != ""){
+                _app.model.subscribe = _app.model.humanToBoolean(loaderInfo.parameters.subscribe);
+            }
             
             if(loaderInfo.parameters.readyFunction != undefined){
                 try{

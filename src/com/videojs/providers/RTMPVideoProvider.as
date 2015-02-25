@@ -419,6 +419,16 @@ package com.videojs.providers{
             _ns.addEventListener(NetStatusEvent.NET_STATUS, onNetStreamStatus);
             _ns.client = this;
             _ns.bufferTime = 1;
+            if(_model.subscribe) {
+                _nc.call("FCSubscribe", null, _src.streamURL);
+            }
+            else {
+                playAfterSubscription();
+            }
+        }
+
+        private function playAfterSubscription():void
+        {
             _ns.play(_src.streamURL);
             _videoReference.attachNetStream(_ns);
             _model.broadcastEventExternally(ExternalEventName.ON_LOAD_START);
@@ -630,7 +640,9 @@ package com.videojs.providers{
          * Called from FMS when subscribing to live streams.
          */
         public function onFCSubscribe(pInfo:Object):void {
-            // no op for now but needed by NetConnection            
+            if (pInfo.code == "NetStream.Play.Start") {
+                playAfterSubscription();
+            }
         }
         
         /**
@@ -644,6 +656,12 @@ package com.videojs.providers{
          * Called from FMS for NetStreams. Incorrectly used for NetConnections as well.
          * This is here to prevent runtime errors.
          */
-        public function streamInfo(pObj:Object):void {}        
+        public function streamInfo(pObj:Object):void {}
+
+        /**
+         * Called from somewhere.
+         * This is here to prevent runtime errors.
+         */
+        public function close():void {}
     }
 }

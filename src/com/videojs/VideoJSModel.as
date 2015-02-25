@@ -42,6 +42,7 @@ package com.videojs{
         private var _src:String = "";
         private var _rtmpConnectionURL:String = "";
         private var _rtmpStream:String = "";
+        private var _subscribe:Boolean = false;
         private var _poster:String = "";
 
         private static var _instance:VideoJSModel;
@@ -241,6 +242,14 @@ package com.videojs{
             if(_autoplay){
                 play();
             }
+        }
+
+        public function get subscribe():Boolean {
+            return _subscribe;
+        }
+
+        public function set subscribe(pValue:Boolean):void {
+            _subscribe = pValue;
         }
 
         /**
