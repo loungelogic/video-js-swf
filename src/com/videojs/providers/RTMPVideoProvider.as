@@ -80,7 +80,10 @@ package com.videojs.providers{
             if(_metadata != null && _metadata.duration != undefined){
                 return Number(_metadata.duration);
             }
-            else{
+            else if (_isLive) {
+                return -1;
+            }
+            else {
                 return 0;
             }
         }
